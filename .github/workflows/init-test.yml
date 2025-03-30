@@ -1,0 +1,26 @@
+name: "init script test"
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show dotfiles
+        run: make list
+      - name: Install dotfiles
+        run: make deploy
+      - name: Install Homebrew & setup (macOS ONLY)
+        if: runner.os == 'macOS'
+        run: make setup
+      - name: Self-documented Makefile
+        run: make help
