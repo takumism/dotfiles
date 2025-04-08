@@ -1,0 +1,3 @@
+.config/karabiner/**/
+.gitconfig.local
+Brewfile.lock.json
