@@ -1,0 +1,71 @@
+# use separate file for username / github token / etc
+[include]
+    path = ~/.gitconfig.local
+
+[user]
+    name  = "takumism"
+    email = "umibooose@gmail.com"
+
+[alias]
+    ad = add
+    br = branch
+    cl = clone --recursive # Clone a repository including all submodules.
+    co = commit -S
+    fc = fetch
+    aliases = config --get-regexp alias
+    # status
+    ss = status -s
+    # switch
+    sw  = switch
+    new = switch -c
+    # log
+    l = log --pretty=format:\"%Cgreen%h %Creset%cd %Cblue[%cn] %Creset%s%C(yellow)%d%C(reset)\" --graph --date=relative --decorate --all
+    lg = log --graph --name-status --pretty=format:\"%C(red)%h %C(reset)(%cd) %C(green)%an %Creset%s %C(yellow)%d%Creset\" --date=relative
+    # push
+    ps = "!git push origin $(git rev-parse --abbrev-ref HEAD)"
+    # pull
+    pl = pull --recurse-submodules
+    ub = "!git pull origin $(git rev-parse --abbrev-ref HEAD) --recurse-submodules --rebase"
+
+[branch]
+	# Show most recently changed branches first.
+	sort = -committerdate
+
+[color]
+    status = auto
+    diff = auto
+    branch = auto
+    interactive = auto
+    grep = auto
+    ui = auto
+
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+
+[commit]
+	# https://help.github.com/articles/signing-commits-using-gpg/
+	gpgsign = true
+
+[core]
+    editor = nvim
+
+[diff]
+    tool = nvimdiff
+
+[difftool "nvimdiff"]
+    cmd = nvim -d \"$LOCAL\" \"$REMOTE\"
+
+[mergetool "nvimdiff"]
+	cmd = nvim -d \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+
+[ghq]
+    root = ~/Projects
+
+[pull]
+    rebase = true
+
+[init]
+	defaultBranch = main

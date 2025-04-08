@@ -1,0 +1,32 @@
+alpha-blending = linear
+adjust-cell-width = -1
+adjust-cell-height = 2
+
+# Font Settings
+font-family = JetBrainsMonoNL Nerd Font Mono
+font-feature = -dlig
+font-size = 13
+
+shell-integration = zsh
+
+mouse-scroll-multiplier = 2
+
+window-padding-x = 10
+window-padding-y = 10
+window-padding-balance = true
+background-blur-radius = 20
+background-opacity = 0.65
+
+# クイックターミナルの位置を画面上部に設定
+quick-terminal-position = "top"
+
+# クイックターミナルを表示するスクリーンを設定 (メインスクリーン)
+quick-terminal-screen = "main"
+
+initial-window = false
+quick-terminal-animation-duration = 0
+quick-terminal-position = bottom
+quick-terminal-screen = mouse
+quick-terminal-animation-duration = 0.1
+quick-terminal-autohide = false
+keybind = global:ctrl+cmd+`=toggle_quick_terminal
