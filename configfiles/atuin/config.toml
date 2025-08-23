@@ -1,0 +1,10 @@
+# Keep history local by default; opt in to sync manually with `atuin login`.
+auto_sync = false
+sync_frequency = "0"
+
+# Reserve a fixed number of lines for the search UI instead of taking over the whole terminal.
+style = "compact"
+inline_height = 20
+
+# Press Enter to insert the selected command without executing it.
+enter_accept = false
