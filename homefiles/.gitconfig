@@ -1,16 +1,13 @@
-# use separate file for username / github token / etc
-[include]
-    path = ~/.gitconfig.local
-
 [user]
     name  = "takumism"
     email = "umibooose@gmail.com"
+    signingkey = ~/.ssh/id_ed25519.pub
 
 [alias]
     ad = add
     br = branch
     cl = clone --recursive # Clone a repository including all submodules.
-    co = commit -S
+    co = commit
     fc = fetch
     aliases = config --get-regexp alias
     # status
@@ -45,14 +42,48 @@
     remote = green
 
 [commit]
-	# https://help.github.com/articles/signing-commits-using-gpg/
+	# Sign commits. Signature format is configured in `[gpg]` below (SSH).
 	gpgsign = true
+
+[tag]
+	gpgsign = true
+
+[gpg]
+	format = ssh
+
+[gpg "ssh"]
+	# For 1Password SSH Agent, set this to:
+	#   /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+	# Otherwise leave empty to use the default OpenSSH binary.
+	program = "/usr/bin/ssh-keygen"
+	# Trust store used to verify signatures made by other people.
+	allowedSignersFile = ~/.config/git/allowed_signers
 
 [core]
     editor = nvim
+    excludesfile = ~/.config/git/ignore
+    pager = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true
+    line-numbers = true
 
 [diff]
     tool = nvimdiff
+    colorMoved = default
+
+[merge]
+    conflictstyle = zdiff3
+
+[fetch]
+    prune = true
+
+[rebase]
+    autoStash = true
+    autoSquash = true
 
 [difftool "nvimdiff"]
     cmd = nvim -d \"$LOCAL\" \"$REMOTE\"

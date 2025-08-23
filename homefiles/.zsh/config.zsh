@@ -1,9 +1,8 @@
 # ----------------------------
 # Auto Complete
-# ---------------------------
-autoload -Uz compinit
-compinit
-
+# ----------------------------
+# NOTE: `compinit` itself is invoked at the end of .zshrc, after all plugins /
+# tool activations have contributed to $fpath.
 setopt always_to_end     # always move the cursor to the end of a completed word.
 setopt complete_in_word  # completion at the cursor position.
 setopt noautoremoveslash # when selecting a directory, leave the last /.
@@ -14,14 +13,6 @@ zstyle ':completion::complete:*' use-cache true     # enable caching of completi
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # case-insensitive.
 
 # ----------------------------
-# Color
-# ----------------------------
-autoload -Uz colors
-colors
-# 補完候補一覧の色設定
-zstyle ':completion:*' list-colors "${LS_COLORS}"
-
-# ----------------------------
 # Editor
 # ----------------------------
 export EDITOR="nvim"
@@ -29,24 +20,23 @@ export EDITOR="nvim"
 # ----------------------------
 # Language
 # ----------------------------
-if [ -z $$LC_ALL ]; then
-  export LC_ALL=C
-fi
-if [ -z $LANG ]; then
+if [ -z "$LANG" ]; then
   export LANG=ja_JP.UTF-8
 fi
 
 # ----------------------------
 # History
 # ----------------------------
-HISTFILE=~/.zsh_history
+# Store the zsh history under XDG_STATE_HOME (defaults to ~/.local/state).
+HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/zsh/history"
+[ -d "${HISTFILE:h}" ] || mkdir -p "${HISTFILE:h}"
 export HISTSIZE=10000
 export SAVEHIST=100000
 
 setopt append_history       # append command history list.
 setopt hist_ignore_all_dups # ignore duplication command history list.
 setopt hist_ignore_space    # ignore space command history list.
-setopt hist_no_store        # do not store command history list.
+setopt hist_no_store        # don't record `history` command invocations themselves.
 setopt hist_reduce_blanks   # reduce continuous blank lines to one.
 setopt inc_append_history   # append command history list in real time.
 setopt share_history        # share command history list.

@@ -1,84 +1,63 @@
 {
   pkgs,
-  username,
-  platform,
-  homeDirectory,
-  rust-bin,
   lib,
   ...
 }:
 {
   home = {
-    username = username;
-    homeDirectory = lib.mkForce homeDirectory;
-    stateVersion = "24.11";
-    # dotfiles
-    file = {
-      ".config" = {
-        source = ./.config;
-        recursive = true;
-      };
-      ".Library/Application Support/Code/User/keybindings.json".source = ./vscode/keybindings.json;
-      ".Library/Application Support/Code/User/settings.json".source = ./vscode/settings.json;
-      ".gitconfig".source = ./.gitconfig;
-      ".gitconfig.local".source = ./.gitconfig.local;
-      ".zshrc".source = ./.zshrc;
-      ".zsh" = {
-        source = ./.zsh;
-        recursive = true;
-      };
-    };
+    # username / homeDirectory are set automatically by home-manager.
+    stateVersion = "25.11";
+
+    # home.file is used for files that should be placed in the home directory.
+    file = lib.mapAttrs (name: type: {
+      source = ./homefiles + "/${name}";
+      recursive = type == "directory";
+    }) (builtins.readDir ./homefiles);
+
     # ref. https://search.nixos.org/packages
     packages = with pkgs; [
       # CLI
       _1password-cli
-      awscli2
+      aerospace
+      atuin
       aws-vault
-      bash
+      awscli2
       bat
+      claude-code
       curl
-      diff-so-fancy
+      delta
       direnv
-      expect
       eza
+      fd
       fzf
       gh
       ghq
       git
-      gnupg
-      httpie
+      gnused
       jq
       lazygit
       mise
       neovim
-      ranger
+      procs
       ripgrep
       starship
-      tree
       wget
+      yazi
       zellij
+      zoxide
       zsh
-      # fonts
+
+      # Fonts
       nerd-fonts.jetbrains-mono
+      udev-gothic-nf
     ];
   };
 
-  nix = {
-    settings = {
-      experimental-features = [
-        "nix-command"
-        "flakes"
-      ];
-      cores = 0;
-      trusted-users = [ username ];
-    };
-
-    gc = {
-      automatic = true;
-      frequency = "daily";
-      options = "--delete-older-than 3d";
-    };
-  };
+  # xdg.configFile is used for config files that should be placed in ~/.config.
+  xdg.configFile = lib.mapAttrs (name: type: {
+    source = ./configfiles + "/${name}";
+    recursive = type == "directory";
+  }) (builtins.readDir ./configfiles);
 
   programs.home-manager.enable = true;
 }

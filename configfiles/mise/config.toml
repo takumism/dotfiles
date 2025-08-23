@@ -1,0 +1,11 @@
+[settings]
+paranoid = true
+install_before = "7d"
+disable_backends = ["asdf"]
+
+[settings.github]
+use_git_credentials = true
+
+[tools]
+go = "latest"
+rust = "latest"

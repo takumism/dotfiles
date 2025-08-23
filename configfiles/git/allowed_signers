@@ -1,0 +1,6 @@
+# Signers trusted for verifying SSH-signed commits.
+# Format: <email or *> <key-type> <public-key>
+#
+# Example:
+# umibooose@gmail.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI...
+umibooose@gmail.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICmHeX3DvNyKhwSTl2ulOqQSemFfNsUVpOfs/N7r2EAU takumism@Takumis-MacBook-Air.local

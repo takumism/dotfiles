@@ -1,5 +1,5 @@
 .DS_Store
-Thumbs.d
+Thumbs.db
 .idea/
 .vscode/
 *.code-workspace
