@@ -12,6 +12,7 @@
     casks = [
       # GUI
       "1password"
+      "claude"
       "discord"
       "docker"
       "google-chrome"

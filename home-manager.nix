@@ -36,6 +36,7 @@
       aws-vault
       bash
       bat
+      claude-code
       curl
       diff-so-fancy
       direnv
@@ -44,6 +45,7 @@
       fzf
       gh
       ghq
+      go
       git
       gnupg
       httpie
