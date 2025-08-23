@@ -1,4 +1,6 @@
-.config/karabiner/**/
-.gitconfig.local
+configfiles/karabiner/**/
 .env
-flake.lock
+.DS_Store
+.direnv/
+result
+result-*

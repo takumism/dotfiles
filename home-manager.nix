@@ -1,84 +1,47 @@
 {
   pkgs,
-  username,
-  platform,
-  homeDirectory,
-  rust-bin,
   lib,
   ...
 }:
 {
   home = {
-    username = username;
-    homeDirectory = lib.mkForce homeDirectory;
-    stateVersion = "24.11";
-    # dotfiles
-    file = {
-      ".config" = {
-        source = ./.config;
-        recursive = true;
-      };
-      ".Library/Application Support/Code/User/keybindings.json".source = ./vscode/keybindings.json;
-      ".Library/Application Support/Code/User/settings.json".source = ./vscode/settings.json;
-      ".gitconfig".source = ./.gitconfig;
-      ".gitconfig.local".source = ./.gitconfig.local;
-      ".zshrc".source = ./.zshrc;
-      ".zsh" = {
-        source = ./.zsh;
-        recursive = true;
-      };
-    };
+    username = "takumism";
+    homeDirectory = "/Users/takumism";
+    stateVersion = "25.11";
+
+    # home.file is used for files that should be placed in the home directory.
+    file = lib.mapAttrs (name: type: {
+      source = ./homefiles + "/${name}";
+      recursive = type == "directory";
+    }) (builtins.readDir ./homefiles);
+
+    # Keep nixpkgs as a small bootstrap layer. Developer tools and optional CLIs
+    # belong in mise to avoid slow Nix builds and large store closures.
     # ref. https://search.nixos.org/packages
     packages = with pkgs; [
-      # CLI
+      # Bootstrap CLI
       _1password-cli
-      awscli2
-      aws-vault
-      bash
-      bat
+      aerospace
       curl
-      diff-so-fancy
       direnv
-      expect
-      eza
-      fzf
-      gh
-      ghq
       git
-      gnupg
-      httpie
-      jq
-      lazygit
+      gnused
       mise
-      neovim
-      ranger
-      ripgrep
       starship
-      tree
       wget
-      zellij
       zsh
-      # fonts
+
+      # Fonts
       nerd-fonts.jetbrains-mono
+      udev-gothic-nf
     ];
   };
 
-  nix = {
-    settings = {
-      experimental-features = [
-        "nix-command"
-        "flakes"
-      ];
-      cores = 0;
-      trusted-users = [ username ];
-    };
-
-    gc = {
-      automatic = true;
-      frequency = "daily";
-      options = "--delete-older-than 3d";
-    };
-  };
+  # xdg.configFile is used for config files that should be placed in ~/.config.
+  xdg.configFile = lib.mapAttrs (name: type: {
+    source = ./configfiles + "/${name}";
+    recursive = type == "directory";
+  }) (builtins.readDir ./configfiles);
 
   programs.home-manager.enable = true;
 }
