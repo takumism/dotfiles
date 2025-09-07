@@ -1,5 +1,9 @@
 { pkgs, ... }:
 {
+  # Use Determinate Nix installer; disable nix-darwin's Nix management
+  # to avoid daemon conflicts.
+  nix.enable = false;
+
   # Use zsh in Nix packages.
   environment.shells = [ pkgs.zsh pkgs.bash ];
   programs.zsh.enable = true;
@@ -96,6 +100,8 @@
 
     # Mute a startup sound
     nvram.variables."StartupMute" = "%01";
+
+    primaryUser = "takumism";
 
     stateVersion = 5;
   };

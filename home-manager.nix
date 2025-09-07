@@ -77,7 +77,8 @@
 
     gc = {
       automatic = true;
-      frequency = "daily";
+      # nix.gc.frequency was renamed; use dates.
+      dates = "daily";
       options = "--delete-older-than 3d";
     };
   };
